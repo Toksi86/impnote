@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<p>
+  <a href="{% url 'notes:index' %}">Impnote</a>
+  <a href="{% url 'notes:topics' %}">Topics</a>
+</p>
+
+{% block content %}{% endblock content %}

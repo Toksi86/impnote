@@ -1,10 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'notes/base.html' %}
+
+{% block content %}
+<p>Topic: {{ topic }}</p>
+
+<p>Notes:</p>
+<ul>
+  {% for note in notes %}
+  <li>
+    <p>{{ note.date_added|date:'M d, Y H:i' }}</p>
+    <p>{{ note.text|linebreaks }}</p>
+  </li>
+  {% empty %}
+  <li>В этом разделе нет ни одной записи.</li>
+  {% endfor %}
+</ul>
+{% endblock content %}
