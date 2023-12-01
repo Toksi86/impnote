@@ -1,0 +1,10 @@
+{% extends "notes/base.html" %}
+
+{% block content %}
+<p>Добавить новый раздел:</p>
+<form action="{% url 'notes:new_topic' %}" method='post'>
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button name="submit">Добавить раздел</button>
+</form>
+{% endblock content %}

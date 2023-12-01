@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<p>Topics</p>
+<p>Разделы</p>
 
 <ul>
   {% for topic in topics %}
@@ -13,5 +13,5 @@
   <li>Пока нет ни одного раздела.</li>
   {% endfor %}
 </ul>
-
+<a href="{% url 'notes:new_topic' %}">Добавить новый раздел</a>
 {% endblock content %}

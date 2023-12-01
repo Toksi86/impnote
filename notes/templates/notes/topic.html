@@ -1,14 +1,20 @@
 {% extends 'notes/base.html' %}
 
 {% block content %}
-<p>Topic: {{ topic }}</p>
+<p>Раздел: {{ topic }}</p>
 
-<p>Notes:</p>
+<p>Записи:</p>
+<p>
+  <a href="{% url 'notes:new_note' topic.id %}">Добавить новую запись</a>
+</p>
 <ul>
   {% for note in notes %}
   <li>
     <p>{{ note.date_added|date:'M d, Y H:i' }}</p>
     <p>{{ note.text|linebreaks }}</p>
+    <p>
+      <a href="{% url 'notes:edit_note' note.id %}">Редактировать запись</a>
+    </p>
   </li>
   {% empty %}
   <li>В этом разделе нет ни одной записи.</li>
