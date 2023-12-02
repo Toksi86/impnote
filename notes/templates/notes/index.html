@@ -1,4 +1,11 @@
 {% extends "notes/base.html" %}
-{% block content %}
-<p>Главная страница</p>
-{% endblock content %}
+{% block page_header %}
+<div class='jumbotron'>
+  <h1 class="display-3">Important note</h1>
+  <p class="lead">Сделай свою жизнь легче:<br>
+    Перестань переживать о том, что что-то забыл.<br>
+    Запиши в заметки все самое важное и не думай об этом.</p>
+  <a class="btn btn-lg btn-primary" href="{% url 'users:register' %}"
+     role="button">Зарегистрироваться &raquo;</a>
+</div>
+{% endblock page_header %}

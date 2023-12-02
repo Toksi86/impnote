@@ -1,23 +1,27 @@
 {% extends 'notes/base.html' %}
 
-{% block content %}
-<p>Раздел: {{ topic }}</p>
+{% block page_header %}
+<h3>Раздел: {{ topic }}</h3>
+{% endblock page_header %}
 
-<p>Записи:</p>
+{% block content %}
 <p>
   <a href="{% url 'notes:new_note' topic.id %}">Добавить новую запись</a>
 </p>
-<ul>
-  {% for note in notes %}
-  <li>
-    <p>{{ note.date_added|date:'M d, Y H:i' }}</p>
-    <p>{{ note.text|linebreaks }}</p>
-    <p>
-      <a href="{% url 'notes:edit_note' note.id %}">Редактировать запись</a>
-    </p>
-  </li>
-  {% empty %}
-  <li>В этом разделе нет ни одной записи.</li>
-  {% endfor %}
-</ul>
+
+{% for note in notes %}
+<div class="card mb-3">
+  <h4 class="card-header">
+    {{ note.date_added|date:'M d, Y H:i' }}
+    <small><a href="{% url 'notes:edit_note' note.id %}">Редактировать запись</a></small>
+  </h4>
+  <div class="card-body">
+    {{ note.text|linebreaks }}
+  </div>
+</div>
+
+{% empty %}
+<p>В этом разделе нет ни одной записи.</p>
+{% endfor %}
+
 {% endblock content %}

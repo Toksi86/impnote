@@ -1,17 +1,19 @@
 {% extends "notes/base.html" %}
 
+
+{% block page_header %}
+<h1>Разделы</h1>
+{% endblock page_header %}
+
 {% block content %}
-
-<p>Разделы</p>
-
 <ul>
   {% for topic in topics %}
-  <li>
+  <li><h3>
     <a href="{% url 'notes:topic' topic.id %}">{{ topic }}</a>
-  </li>
+  </h3></li>
   {% empty %}
-  <li>Пока нет ни одного раздела.</li>
+  <li><h3>Пока нет ни одного раздела.</h3></li>
   {% endfor %}
 </ul>
-<a href="{% url 'notes:new_topic' %}">Добавить новый раздел</a>
+<h3><a href="{% url 'notes:new_topic' %}">Добавить новый раздел</a></h3>
 {% endblock content %}
