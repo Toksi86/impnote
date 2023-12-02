@@ -1,6 +1,13 @@
 <p>
   <a href="{% url 'notes:index' %}">Impnote</a>
   <a href="{% url 'notes:topics' %}">Разделы</a>
+  {% if user.is_authenticated %}
+  Добро пожаловать, {{ user.username }}.
+  <a href="{% url 'users:logout' %}">Выйти</a>
+  {% else %}
+  <a href="{% url 'users:register' %}">Register</a> -
+  <a href="{% url 'users:login' %}">Войти</a>
+  {% endif %}
 </p>
 
 {% block content %}{% endblock content %}

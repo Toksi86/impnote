@@ -11,4 +11,4 @@ urlpatterns = [path('', views.index, name='index'),
                path('new_topic/', views.new_topic, name='new_topic'),
                path('new_note/<int:topic_id>/', views.new_note, name='new_note'),
                path('edit_note/<int:note_id>/', views.edit_note, name='edit_note'),
-               ]
+]
