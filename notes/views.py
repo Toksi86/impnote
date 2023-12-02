@@ -1,4 +1,6 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.http import Http404
 
 from .froms import TopicForm, NoteForm
 from .models import Topic, Note
@@ -9,16 +11,20 @@ def index(request):
     return render(request, 'notes/index.html')
 
 
+@login_required
 def get_topics(request):
     """Выводит список разделов."""
-    topics = Topic.objects.order_by('date_added')
+    topics = Topic.objects.filter(owner=request.user).order_by('date_added')
     context = {'topics': topics}
     return render(request, 'notes/topics.html', context)
 
 
+@login_required
 def get_topic(request, topic_id):
     """Выводит раздел и все его записи"""
     topic = Topic.objects.get(id=topic_id)
+    if topic.owner != request.user:
+        raise Http404
     # Модели Topic и Note связаны. Экземпляра класса Topic имеет метод,
     # позволяющий получить все связанные объекты класса Note, при помощи classname_set
     notes = topic.note_set.order_by('-date_added')
@@ -26,6 +32,7 @@ def get_topic(request, topic_id):
     return render(request, 'notes/topic.html', context)
 
 
+@login_required
 def new_topic(request):
     """Создание нового раздела"""
     if request.method != 'POST':
@@ -33,12 +40,15 @@ def new_topic(request):
     else:
         form = TopicForm(data=request.POST)
         if form.is_valid():
-            form.save()
+            new_topic = form.save(commit=False)
+            new_topic.owner = request.user
+            new_topic.save()
             return redirect('notes:topics')
     context = {'form': form}
     return render(request, 'notes/new_topic.html', context)
 
 
+@login_required
 def new_note(request, topic_id):
     """Создание новой записи"""
     topic = Topic.objects.get(id=topic_id)
@@ -55,10 +65,13 @@ def new_note(request, topic_id):
     return render(request, 'notes/new_note.html', context)
 
 
+@login_required
 def edit_note(request, note_id):
     """Изменение записи"""
     note = Note.objects.get(id=note_id)
     topic = note.topic
+    if topic.owner != request.user:
+        raise Http404
 
     if request.method != 'POST':
         form = NoteForm(instance=note)
