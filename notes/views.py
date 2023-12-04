@@ -25,9 +25,7 @@ def get_topic(request, topic_id):
     topic = Topic.objects.get(id=topic_id)
     if topic.owner != request.user:
         raise Http404
-    # Модели Topic и Note связаны. Экземпляра класса Topic имеет метод,
-    # позволяющий получить все связанные объекты класса Note, при помощи classname_set
-    notes = topic.note_set.order_by('-date_added')
+    notes = topic.notes.order_by('-date_added')
     context = {'topic': topic, 'notes': notes}
     return render(request, 'notes/topic.html', context)
 

@@ -1,13 +1,14 @@
 {% extends "notes/base.html" %}
-
+{% load bootstrap5 %}
 {% block content %}
 
-<p><a href="{% url 'notes:topic' topic.id %}">{{ topic }}</a></p>
+<p><h3><a class="text-decoration-none" href="{% url 'notes:topic' topic.id %}">{{ topic }}</h3></a></p>
 
-<p>Добавить новую запись:</p>
 <form action="{% url 'notes:new_note' topic.id %}" method='post'>
   {% csrf_token %}
-  {{ form.as_p }}
-  <button name='submit'>Добавить запись</button>
+  {% bootstrap_form form %}
+  {% buttons %}
+  <button class="btn btn-success" name='submit'>Добавить запись</button>
+  {% endbuttons %}
 </form>
 {% endblock content %}

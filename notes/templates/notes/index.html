@@ -5,7 +5,11 @@
   <p class="lead">Сделай свою жизнь легче:<br>
     Перестань переживать о том, что что-то забыл.<br>
     Запиши в заметки все самое важное и не думай об этом.</p>
-  <a class="btn btn-lg btn-primary" href="{% url 'users:register' %}"
+  {% if user.is_authenticated %}
+  <p class="lead">Спасибо, что вы с нами!</p>
+  {% else %}
+  <a class="btn btn-lg btn-success" href="{% url 'users:register' %}"
      role="button">Зарегистрироваться &raquo;</a>
+  {% endif %}
 </div>
 {% endblock page_header %}

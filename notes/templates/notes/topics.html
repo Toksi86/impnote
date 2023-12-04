@@ -6,14 +6,14 @@
 {% endblock page_header %}
 
 {% block content %}
-<ul>
+<ul class="list-group list-group-flush">
   {% for topic in topics %}
-  <li><h3>
-    <a href="{% url 'notes:topic' topic.id %}">{{ topic }}</a>
-  </h3></li>
+   <li class="list-group-item">
+    <p><h3><a class="text-decoration-none" href="{% url 'notes:topic' topic.id %}">{{ topic }}</h3></a></p>
+  </li>
   {% empty %}
-  <li><h3>Пока нет ни одного раздела.</h3></li>
+  </ul><p class="font-monospace">Пока нет ни одного раздела.</p>
   {% endfor %}
 </ul>
-<h3><a href="{% url 'notes:new_topic' %}">Добавить новый раздел</a></h3>
+<a href="{% url 'notes:new_topic' %}" class="btn btn-success">Добавить новый раздел</a>
 {% endblock content %}
