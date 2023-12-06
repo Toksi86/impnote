@@ -2,7 +2,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import login
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
@@ -33,13 +32,13 @@ def sign_up(request):
                 mail_subject, message, to=[to_email]
             )
             email.send()
-            # login(request, user, backend='users.authentication.EmailAuthBackend')
-            return redirect('notes:index')
+            return redirect('users:email_confirm')
     context = {'form': form}
     return render(request, 'registration/register.html', context)
 
 
 def activate(request, uidb64, token):
+    """Активация аккаунта пользователя"""
     User = get_user_model()
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
@@ -52,4 +51,14 @@ def activate(request, uidb64, token):
         login(request, user, backend='users.authentication.EmailAuthBackend')
         return redirect('notes:index')
     else:
-        return HttpResponse('Activation link is invalid!')
+        return redirect('users:email_confirm_filed')
+
+
+def email_confirm(request):
+    """Страница с просьбой подтвердить регистрацию"""
+    return render(request, 'registration/email_confirm.html')
+
+
+def email_confirm_filed(request):
+    """Страница с ошибкой ссылки """
+    return render(request, 'registration/email_confirm_filed.html')

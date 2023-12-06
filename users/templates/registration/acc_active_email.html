@@ -1,5 +1,5 @@
 {% autoescape off %}
-Hi {{ user.username }},
-Please click on the link to confirm your registration,
+Привет {{ user.username }},
+Пожалуйста перейдите по ссылке чтобы закончить регистрацию,
 http://{{ domain }}{% url 'users:activate' uidb64=uid token=token %}
 {% endautoescape %}
