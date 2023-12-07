@@ -3,6 +3,7 @@ from django.db import models
 
 
 class CustomUser(AbstractUser):
+    """Переопределение модели пользователя"""
     email = models.EmailField(max_length=200, unique=True)
     is_active = models.BooleanField(default=False)
 

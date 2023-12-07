@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
 from django.http import Http404
+from django.shortcuts import render, redirect
 
 from .froms import TopicForm, NoteForm
 from .models import Topic, Note
@@ -28,6 +28,16 @@ def get_topic(request, topic_id):
     notes = topic.notes.order_by('-date_added')
     context = {'topic': topic, 'notes': notes}
     return render(request, 'notes/topic.html', context)
+
+
+@login_required
+def get_note(request, note_id):
+    """Выводит раздел и все его записи"""
+    note = Note.objects.get(id=note_id)
+    if note.topic.owner != request.user:
+        raise Http404
+    context = {'note': note}
+    return render(request, 'notes/note.html', context)
 
 
 @login_required

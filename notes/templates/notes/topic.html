@@ -13,7 +13,7 @@
 <br>
 <div class="card">
   <div class="card-header">
-    <h4> {{ note.title }} </h4>
+    <h4><a href="{% url 'notes:note' note.id %}"> {{ note.title }} </a></h4>
   </div>
   <div class="card-body">
     <h5 class="card-title"></h5>
